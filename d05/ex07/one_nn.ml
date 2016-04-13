@@ -1,4 +1,3 @@
-type radar = float array * string
 
 (* -------------------- ex05 -------------------- *)
 
@@ -52,14 +51,7 @@ let examples_of_file filename =
 
 (* -------------------- ex07 -------------------- *)
 
-let one_nn lst rad =
-	let tl = List.map (fun c -> (eu_dist (fst c) (fst rad), c)) lst in
-    let sorting = List.sort compare tl in
-	let sorted = List.map snd sorting in
-	snd (List.hd sorted)
-	
-(* -------------------- TESTS -------------------- *)
-
+type radar = float array * string
 
 let print_coordinates arr =
 	for i = 0 to Array.length arr - 1 do
@@ -67,6 +59,21 @@ let print_coordinates arr =
 		print_string "; "
 	done
 	
+let print_sorting (lst : (float * radar) list) =
+	List.iter (fun c -> Printf.printf "Distance = %f - Coord : " (fst c); print_coordinates (fst (snd c)); print_endline (snd (snd c))) lst
+
+let comp_tuple x y =
+	compare (fst x) (fst y)
+	
+let one_nn (lst : radar list) (rad : radar) =
+	let tl = List.map (fun c -> (eu_dist (fst c) (fst rad), c)) lst in
+    let sorting = List.sort comp_tuple tl in
+    (* print_sorting sorting; *)		(* uncomment to test!!*)
+	let sorted = List.map snd sorting in
+	snd (List.hd sorted)
+	
+(* -------------------- TESTS -------------------- *)
+
 let print_pair pair =
 	print_string "Coordinates for pair : [|";
 	print_coordinates (fst pair);
@@ -77,7 +84,8 @@ let print_file lst =
 	List.iter print_pair lst
 	
 let main argv =
-	print_file (examples_of_file argv.(1))
+	let rad = (Array.make 7 0., "g") in
+	print_endline (one_nn (examples_of_file argv.(1)) rad)
 
 let () =
 	let argv = Sys.argv in
