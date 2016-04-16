@@ -1,15 +1,3 @@
-(*****************************************************************************)
-(*                                                                           *)
-(*   Vincent Jacquier                                     :::      ::::::::  *)
-(*   Jean-Jacques MOIROUX                               :+:      :+:    :+:  *)
-(*                                                    +:+ +:+         +:+    *)
-(*   By: vjacquie <vjacquie@student.42.fr>          +#+  +:+       +#+       *)
-(*   By: jmoiroux <jjmoiroux@gmail.com>           +#+#+#+#+#+   +#+          *)
-(*                                                     #+#    #+#            *)
-(*   Created: 2015/18/15 by vjacquie jmoiroux         ###   ########.fr      *)
-(*                                                                           *)
-(*****************************************************************************)
-
 let rec getcase (x:int) (y:int) map = match map with
 	| [] -> invalid_arg "Error y (getcase)"
 	| h1::tail -> (
